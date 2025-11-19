@@ -1,1 +1,1 @@
-# estatisticas_notas_final.c
+Este projeto consiste em um programa em linguagem C que permite ao usuário cadastrar notas de alunos (entre 0 e 10) e, posteriormente, calcular e exibir estatísticas fundamentais como Média, Maior Nota, Menor Nota e Desvio Padrão.
