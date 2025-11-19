@@ -1,0 +1,160 @@
+#include <stdio.h>
+#include <math.h>
+
+// ---------------- FUNÇÕES DA ETAPA 6 ---------------- //
+
+float calcularDesvioPadrao(float notas[], int tamanho, float media){
+    float somaDiferencasQuadradas = 0.0;
+    float variada;
+    int i;
+    
+    for (i = 0; i< tamanho; i++) {
+        somaDiferencasQuadradas += pow(notas[i] - media, 2);
+    }
+    
+    variada =  somaDiferencasQuadradas / tamanho;
+    return sqrt (variada);
+}
+
+// Função que calcula a média das notas
+float calcularMedia(float notas[], int tamanho) {
+  float soma;
+  float media;
+  int i;
+
+  soma = 0;
+
+  for(i = 0; i < tamanho; i++){
+    soma +=notas[i];
+  }
+  media = soma / tamanho;
+  return media;
+  }
+
+//Função para encontrar a maior nota
+
+float maiorNota(float notas[], int tamanho){
+  float maior;
+  int i;
+  
+  maior = notas[0];
+
+  for (i = 1; i < tamanho; i++) {
+    if(notas[i] > maior) {
+      maior = notas[i]; 
+    }
+  }
+  return maior;
+}
+
+//Função para encontrar o menor numero
+float menorNota(float notas[], int tamanho){
+  float menor;
+  int i;
+   
+  menor = notas[0];
+
+  for(i = 1; i < tamanho; i++) {
+    if(notas[i] < menor){
+      menor = notas[i];
+    }
+  }
+  return menor;
+}
+
+//Função que exibe as notas cadastradas
+void mostrarNotas(float notas[], int tamanho) {
+  int i;
+   
+  printf("Notas Cadastradas: ");
+  for(i = 0; i < tamanho; i++) {
+    printf("%0.2f", notas[i]);
+  printf("\n");}
+}
+
+//Função principal
+int main (){
+  float notas[50];
+  float nota;
+  int tamanho;
+  int i;
+  int opcao;
+  int continuar;
+
+  tamanho = 0;
+  continuar = 1;
+   
+  printf("--- CALCULADORA DE ESTATISTICAS DE NOTAS ---\n");
+
+  // --- Cadastro de notas ---
+  printf("\n--- CADASTRO DE NOTAS ---\n");
+  printf("Digite a nota do aluno (0 a 10).\n");
+  printf("Digite -1 quando quiser parar.\n");
+
+  while (continuar == 1) {
+    printf("Informe uma nota: ");
+    scanf("%f", &nota);
+    
+    if (nota == -1) {
+      continuar = 0; // encerra o cadastro
+    } else if (nota < 0.0 || nota > 10.0) {
+      printf("ERRO: NOTA INVALIDA! (APENAS ENTRE 0 E 10)\n");
+    } else {
+      notas[tamanho] = nota;
+      tamanho++;
+    }
+  }
+  
+  if (tamanho == 0) {
+    printf("\nNenhuma nota foi cadastrada.\n");
+    return 0;
+  }
+
+  // --- Menu principal da Etapa 6 ---
+  continuar = 1;
+  while (continuar == 1) {
+    printf("\n--- MENU ---\n");
+    printf("1 - Calcular media das notas\n");
+    printf("2 - Mostrar maior nota\n");
+    printf("3 - Mostrar menor nota\n");
+    printf("4 - Mostrar todas as notas\n");
+    printf("5 - Calcular Desvio Padrao\n");
+    printf("0 - Sair\n");
+    printf("Escolha uma opcao: ");
+    
+   if (scanf("%d", &opcao) != 1) {
+            printf("Opcao invalida. Por favor, digite um numero.\n");
+            continue;
+        }
+
+        switch (opcao) { // Uso de switch (Etapa 2, opcional) para melhor clareza
+            case 1:
+                printf("Media das notas: %0.2f\n", calcularMedia(notas, tamanho));
+                break;
+            case 2:
+                printf("Maior nota: %0.2f\n", maiorNota(notas, tamanho));
+                break;
+            case 3:
+                printf("Menor nota: %0.2f\n", menorNota(notas, tamanho));
+                break;
+            case 4:
+                mostrarNotas(notas, tamanho);
+                break;
+            case 5:
+                { // Bloco para declarar variáveis locais
+                    float media = calcularMedia(notas, tamanho);
+                    float dp = calcularDesvioPadrao(notas, tamanho, media);
+                    printf("Desvio Padrao: %0.2f\n", dp);
+                }
+                break;
+            case 0:
+                printf("Encerrando o programa...\n");
+                continuar = 0; // Sai do menu
+                break;
+            default:
+                printf("Opcao invalida!\n");
+        }
+    }
+
+    return 0;
+}
